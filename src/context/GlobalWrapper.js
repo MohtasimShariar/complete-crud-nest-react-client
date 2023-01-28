@@ -1,6 +1,7 @@
 import { createContext, useState } from 'react';
 import axios from 'axios';
 import { useDisclosure, useToast } from '@chakra-ui/react';
+import { useEffect } from 'react';
 export const GlobalContext = createContext();
 
 export default function Wrapper({ children }) {
@@ -9,6 +10,11 @@ export default function Wrapper({ children }) {
   const [errors, setErrors] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+
+  // store data from country and state 
+
+  const [countries,setCountries]= useState([])
+ 
   
   const FetchUsers = () => {
     axios
@@ -50,6 +56,7 @@ export default function Wrapper({ children }) {
   };
 
   const Add = (form, setForm) => {
+   
     axios
       .post('/api/users', form)
       .then((res) => {
@@ -99,6 +106,19 @@ export default function Wrapper({ children }) {
         setErrors(err.response.data.error);
       });
   };
+
+
+  useEffect(()=>{
+
+    axios.get('fakedata/states.json')
+    .then((res) =>setCountries(res.data)) 
+    .catch(err=>setErrors(err.message))
+
+  },[])
+
+
+  
+
   return (
     <GlobalContext.Provider
       value={{
@@ -116,6 +136,8 @@ export default function Wrapper({ children }) {
         setErrors,
         user,
         setUser,
+        countries,
+       
       }}
     >
       {children}

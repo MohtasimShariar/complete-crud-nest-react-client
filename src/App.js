@@ -84,6 +84,7 @@ function App() {
                 {users?.map(({ _id, fullname, email, age, country }) => {
                   return (
                     <Row
+                    key={_id}
                       id={_id}
                       fullname={fullname}
                       email={email}

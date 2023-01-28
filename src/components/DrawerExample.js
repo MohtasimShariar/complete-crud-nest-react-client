@@ -7,7 +7,8 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  Input,
+
+  Select,
   Stack,
 } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
@@ -15,10 +16,12 @@ import { GlobalContext } from '../context/GlobalWrapper';
 import InputsGroup from './InputsGroup';
 
 export default function DrawerExample() {
-  const { onOpen, isOpen, onClose, Add, errors, setErrors, user, Update } =
+  const { onOpen, isOpen, onClose, Add, errors, setErrors, user, Update ,countries } =
     useContext(GlobalContext);
+    const [state,setState] = useState([])
   const [form, setForm] = useState({});
   const onChangeHandler = (e) => {
+   
     setForm({
       ...form,
       [e.target.name]: e.target.value,
@@ -36,6 +39,16 @@ export default function DrawerExample() {
   useEffect(() => {
     setForm(user);
   }, [user]);
+
+  // handle country states 
+const handleCountryChange=(e)=>{
+  const countryVal =  e.target.value;
+  
+  const selectedCountry =countries.find(country=>country.country_id === countryVal).states
+  setState(selectedCountry)
+
+}
+
   return (
     <>
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
@@ -70,14 +83,51 @@ export default function DrawerExample() {
                 value={form?.age}
                 errors={errors?.age}
               />
-              <InputsGroup
+              {/* <InputsGroup
                 name="country"
                 onChangeHandler={onChangeHandler}
                 value={form?.country}
                 errors={errors?.country}
-              />
+                
+
+              /> */}
+{/* countries */}
+
+<Select placeholder='Select Country'
+
+onChange={handleCountryChange}
+
+>
+{
+  countries.map(country=>  <option
+     key={country.country_id}
+     value={country.country_id} 
+    
+  >{country.country_name}</option>)
+}
+</Select>
+
+{/* select state */}
+
+<Select placeholder='Select city'
+
+
+
+>
+{
+  state.map(st=>  <option
+     key={st.state_id}
+     value={st.state_id} 
+    
+  >{st.state_name}</option>)
+}
+</Select>
+
+
+
+
             </Stack>
-          </DrawerBody>
+          </DrawerBody> 
 
           <DrawerFooter>
             <Button

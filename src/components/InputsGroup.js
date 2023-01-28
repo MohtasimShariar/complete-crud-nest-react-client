@@ -12,8 +12,8 @@ const InputsGroup = ({ name, onChangeHandler, value, errors }) => {
       <FormLabel>{name}</FormLabel>
       <Input type="text" name={name} onChange={onChangeHandler} value={value} />
       {errors &&
-        errors?.map((err) => {
-          return <FormErrorMessage>{err}</FormErrorMessage>;
+        errors?.map((err,index) => {
+          return <FormErrorMessage key={index}>{err}</FormErrorMessage>;
         })}
     </FormControl>
   );
