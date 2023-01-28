@@ -22,6 +22,8 @@ import DrawerExample from './components/DrawerExample';
 function App() {
   const { FetchUsers, Search, users, onOpen, isOpen, onClose } =
     useContext(GlobalContext);
+
+  
   const [query, setQuery] = useState('');
   useEffect(() => {
     FetchUsers();
@@ -77,11 +79,12 @@ function App() {
                   <Th>Email</Th>
                   <Th>Age</Th>
                   <Th>Country</Th>
+                  <Th>State</Th>
                   <Th>Actions</Th>
                 </Tr>
               </Thead>
               <Tbody>
-                {users?.map(({ _id, fullname, email, age, country }) => {
+                {users?.map(({ _id, fullname, email, age, country ,state}) => {
                   return (
                     <Row
                     key={_id}
@@ -90,6 +93,7 @@ function App() {
                       email={email}
                       age={age}
                       country={country}
+                      state={state}
                     />
                   );
                 })}

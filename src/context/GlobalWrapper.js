@@ -21,12 +21,14 @@ export default function Wrapper({ children }) {
       .get('/api/users')
       .then((res) => {
         setUsers(res.data);
+        
       })
       .catch((err) => {
         console.log(err.reponse.data);
       });
   };
 
+  console.log(users)
   const Search = (query) => {
     axios
       .post(`/api/users/search?key=${query}`)

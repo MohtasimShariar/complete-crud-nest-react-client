@@ -103,14 +103,7 @@ const handleStateChange = (e)=>{
                 value={form?.age}
                 errors={errors?.age}
               />
-              {/* <InputsGroup
-                name="country"
-                onChangeHandler={onChangeHandler}
-                value={form?.country}
-                errors={errors?.country}
-                
 
-              /> */}
 {/* countries */}
 
 <Select placeholder='Select Country'

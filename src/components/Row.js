@@ -3,7 +3,8 @@ import React, { useContext } from 'react';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import { GlobalContext } from '../context/GlobalWrapper';
 
-const Row = ({ id, fullname, email, age, country }) => {
+const Row = ({ id, fullname, email, age, country,state }) => {
+  
   const { Delete, onOpen, FindOne } = useContext(GlobalContext);
   return (
     <Tr>
@@ -14,6 +15,7 @@ const Row = ({ id, fullname, email, age, country }) => {
       <Td>{email}</Td>
       <Td>{age}</Td>
       <Td>{country}</Td>
+      <Td>{state}</Td>
       <Td>
         <Box display="flex" gap="1">
           <Button colorScheme={'blue'}>
