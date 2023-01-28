@@ -59,6 +59,15 @@ const handleCountryChange=(e)=>{
 }
 // state change
 
+const handleStateChange = (e)=>{
+
+  const selectedState =state.find(st=>st.state_id=== e.target.value)
+  setForm({
+    ...form,
+    [e.target.name]: selectedState.state_name,
+  });
+}
+
 
   return (
     <>
@@ -127,7 +136,7 @@ onChange={handleCountryChange}
 name="state"
 
 
-// onChange={handleStateChange}
+onChange={handleStateChange}
 
 
 >
