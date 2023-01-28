@@ -20,8 +20,9 @@ export default function DrawerExample() {
     useContext(GlobalContext);
     const [state,setState] = useState([])
   const [form, setForm] = useState({});
+
   const onChangeHandler = (e) => {
-   
+  
     setForm({
       ...form,
       [e.target.name]: e.target.value,
@@ -42,12 +43,22 @@ export default function DrawerExample() {
 
   // handle country states 
 const handleCountryChange=(e)=>{
-  const countryVal =  e.target.value;
+
+
   
-  const selectedCountry =countries.find(country=>country.country_id === countryVal).states
-  setState(selectedCountry)
+  const selectedCountry =countries.find(country=>country.country_id === e.target.value)
+  
+  setState(selectedCountry.states)
+
+  setForm({
+    ...form,
+    [e.target.name]: selectedCountry.country_name,
+  });
+ 
 
 }
+// state change
+
 
   return (
     <>
@@ -94,6 +105,8 @@ const handleCountryChange=(e)=>{
 {/* countries */}
 
 <Select placeholder='Select Country'
+                name="country"
+
 
 onChange={handleCountryChange}
 
@@ -101,7 +114,8 @@ onChange={handleCountryChange}
 {
   countries.map(country=>  <option
      key={country.country_id}
-     value={country.country_id} 
+     value={country.country_id}
+     name={country.country_name} 
     
   >{country.country_name}</option>)
 }
@@ -109,8 +123,11 @@ onChange={handleCountryChange}
 
 {/* select state */}
 
-<Select placeholder='Select city'
+<Select placeholder='Select state'
+name="state"
 
+
+// onChange={handleStateChange}
 
 
 >
@@ -118,6 +135,7 @@ onChange={handleCountryChange}
   state.map(st=>  <option
      key={st.state_id}
      value={st.state_id} 
+     name={st.state_name}
     
   >{st.state_name}</option>)
 }
