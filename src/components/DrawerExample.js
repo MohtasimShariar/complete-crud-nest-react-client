@@ -7,7 +7,8 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  Input,
+
+  Select,
   Stack,
 } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
@@ -15,10 +16,13 @@ import { GlobalContext } from '../context/GlobalWrapper';
 import InputsGroup from './InputsGroup';
 
 export default function DrawerExample() {
-  const { onOpen, isOpen, onClose, Add, errors, setErrors, user, Update } =
+  const { onOpen, isOpen, onClose, Add, errors, setErrors, user, Update ,countries } =
     useContext(GlobalContext);
+    const [state,setState] = useState([])
   const [form, setForm] = useState({});
+
   const onChangeHandler = (e) => {
+  
     setForm({
       ...form,
       [e.target.name]: e.target.value,
@@ -36,6 +40,35 @@ export default function DrawerExample() {
   useEffect(() => {
     setForm(user);
   }, [user]);
+
+  // handle country states 
+const handleCountryChange=(e)=>{
+
+
+  
+  const selectedCountry =countries.find(country=>country.country_id === e.target.value)
+  
+  setState(selectedCountry.states)
+
+  setForm({
+    ...form,
+    [e.target.name]: selectedCountry.country_name,
+  });
+ 
+
+}
+// state change
+
+const handleStateChange = (e)=>{
+
+  const selectedState =state.find(st=>st.state_id=== e.target.value)
+  setForm({
+    ...form,
+    [e.target.name]: selectedState.state_name,
+  });
+}
+
+
   return (
     <>
       <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
@@ -70,14 +103,51 @@ export default function DrawerExample() {
                 value={form?.age}
                 errors={errors?.age}
               />
-              <InputsGroup
+
+{/* countries */}
+
+<Select placeholder='Select Country'
                 name="country"
-                onChangeHandler={onChangeHandler}
-                value={form?.country}
-                errors={errors?.country}
-              />
+
+
+onChange={handleCountryChange}
+
+>
+{
+  countries.map(country=>  <option
+     key={country.country_id}
+     value={country.country_id}
+     name={country.country_name} 
+    
+  >{country.country_name}</option>)
+}
+</Select>
+
+{/* select state */}
+
+<Select placeholder='Select state'
+name="state"
+
+
+onChange={handleStateChange}
+
+
+>
+{
+  state.map(st=>  <option
+     key={st.state_id}
+     value={st.state_id} 
+     name={st.state_name}
+    
+  >{st.state_name}</option>)
+}
+</Select>
+
+
+
+
             </Stack>
-          </DrawerBody>
+          </DrawerBody> 
 
           <DrawerFooter>
             <Button
